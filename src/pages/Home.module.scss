@@ -1,0 +1,14 @@
+.container{
+  display: flex;
+  height: calc(100vh - 64px - 65px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .info{
+    text-align: center;
+    button{
+      height: 60px;
+      font-size: 24px;
+    }
+  }
+}

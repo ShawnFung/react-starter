@@ -1,0 +1,23 @@
+.canvas{
+  min-height: 100%;
+  overflow: hidden;
+}
+.component-wrapper{
+  margin: 12px;
+  border: 1px solid #fff;
+  padding: 12px;
+  border-radius: 3px;
+  &:hover{
+    border-color: #d9d9d9;
+  }
+}
+.component{
+  pointer-events: none;
+}
+.isSelected{
+  border:1px solid #409eff !important;
+}
+.isLocked{
+  opacity: .5;
+  cursor: not-allowed;
+}
