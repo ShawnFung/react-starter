@@ -5,13 +5,14 @@ import { ComponentStateType } from '../store/componentReducer'
 
 function useGetComponents() {
   const components = useSelector<StateType>(state => state.components)
-  const { componentList = [], selectedId } = components as ComponentStateType
+  const { componentList = [], selectedId, copiedComponent } = components as ComponentStateType
 
   const selectedComponent = componentList.find(item => item.fe_id == selectedId)
   return {
     componentList,
     selectedId,
     selectedComponent,
+    copiedComponent,
   }
 }
 

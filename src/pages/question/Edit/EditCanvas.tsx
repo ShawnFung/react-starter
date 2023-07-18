@@ -6,6 +6,7 @@ import { getComponentConfByType } from '../../../components/questionComponents'
 import { changeSelectedId } from '../../../store/componentReducer'
 import { useDispatch } from 'react-redux'
 import classNames from 'classnames'
+import useBindCanvasKeyPress from '../../../hooks/useBindCanvasKeyPress'
 
 type PropsType = {
   loading: boolean
@@ -15,6 +16,8 @@ const EditCanvas: FC<PropsType> = props => {
   const { loading } = props
   const { componentList, selectedId } = useGetComponents()
   const dispatch = useDispatch()
+
+  useBindCanvasKeyPress()
 
   function handleClick(e: MouseEvent, id: string) {
     e.stopPropagation()

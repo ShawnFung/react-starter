@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit'
 import { ComponentPropsType } from '../../components/questionComponents'
 import { getNextSelectedId } from './utils'
+import cloneDeep from 'lodash.clonedeep'
 
 export type ComponentInfoType = {
   fe_id: string
@@ -14,11 +15,13 @@ export type ComponentInfoType = {
 export type ComponentStateType = {
   selectedId: string
   componentList: Array<ComponentInfoType>
+  copiedComponent: ComponentInfoType | null
 }
 
 const initState: ComponentStateType = {
   selectedId: '',
   componentList: [],
+  copiedComponent: null,
 }
 
 export const componentsSlice = createSlice({
@@ -69,6 +72,47 @@ export const componentsSlice = createSlice({
       if (!comp) return
       comp.isLocked = isLocked
     },
+    copyComponent(state) {
+      const { selectedId } = state
+      const selectionComponent = state.componentList.find(item => item.fe_id == selectedId)
+      if (selectionComponent) {
+        state.copiedComponent = cloneDeep({ ...selectionComponent, fe_id: nanoid() })
+      }
+    },
+    pasteComponent(state) {
+      if (!state.selectedId || !state.copiedComponent) {
+        return
+      }
+      const index = state.componentList.findIndex(item => item.fe_id == state.selectedId)
+      if (index == -1) {
+        return
+      }
+      state.componentList.splice(index + 1, 0, state.copiedComponent)
+      state.selectedId = state.copiedComponent.fe_id
+      state.copiedComponent = null
+    },
+    selectPrevComponent(state) {
+      const { selectedId } = state
+      if (!selectedId) {
+        return
+      }
+      const index = state.componentList.findIndex(item => item.fe_id == selectedId)
+      if (index == 0) {
+        return
+      }
+      state.selectedId = state.componentList[index - 1].fe_id
+    },
+    selectNextComponent(state) {
+      const { selectedId, componentList } = state
+      if (!selectedId) {
+        return
+      }
+      const index = componentList.findIndex(item => item.fe_id == selectedId)
+      if (index == componentList.length - 1) {
+        return
+      }
+      state.selectedId = state.componentList[index + 1].fe_id
+    },
   },
 })
 
@@ -80,5 +124,9 @@ export const {
   deleteSelectedComponent,
   changeSelectedComponentHidden,
   changeSelectedComponentLock,
+  copyComponent,
+  pasteComponent,
+  selectPrevComponent,
+  selectNextComponent,
 } = componentsSlice.actions
 export default componentsSlice.reducer

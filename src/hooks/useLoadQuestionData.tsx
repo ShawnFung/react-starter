@@ -31,7 +31,7 @@ function useLoadQuestionData() {
     if (componentList.length > 0) {
       selectedId = componentList[0].fe_id
     }
-    dispatch(resetComponents({ componentList, selectedId: selectedId }))
+    dispatch(resetComponents({ componentList, selectedId: selectedId, copiedComponent: null }))
   }, [data])
 
   useEffect(() => {
