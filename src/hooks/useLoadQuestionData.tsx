@@ -4,6 +4,7 @@ import { useRequest } from 'ahooks'
 import { useParams } from 'react-router-dom'
 import { resetComponents } from '../store/componentReducer'
 import { useDispatch } from 'react-redux'
+import { resetPageInfo } from '../store/pageinfoReducer'
 
 function useLoadQuestionData() {
   const { id = '' } = useParams()
@@ -26,12 +27,13 @@ function useLoadQuestionData() {
     if (!data) {
       return
     }
-    const { title, componentList = [] } = data
+    const { title, desc, js, css, componentList = [] } = data
     let selectedId = ''
     if (componentList.length > 0) {
       selectedId = componentList[0].fe_id
     }
     dispatch(resetComponents({ componentList, selectedId: selectedId, copiedComponent: null }))
+    dispatch(resetPageInfo({ title, desc, js, css }))
   }, [data])
 
   useEffect(() => {

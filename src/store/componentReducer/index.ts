@@ -2,6 +2,7 @@ import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit'
 import { ComponentPropsType } from '../../components/questionComponents'
 import { getNextSelectedId } from './utils'
 import cloneDeep from 'lodash.clonedeep'
+import { arrayMove } from '@dnd-kit/sortable'
 
 export type ComponentInfoType = {
   fe_id: string
@@ -113,6 +114,10 @@ export const componentsSlice = createSlice({
       }
       state.selectedId = state.componentList[index + 1].fe_id
     },
+    moveComponent(state, action: PayloadAction<{ oldIndex: number; newIndex: number }>) {
+      const { oldIndex, newIndex } = action.payload
+      state.componentList = arrayMove(state.componentList, oldIndex, newIndex)
+    },
   },
 })
 
@@ -128,5 +133,6 @@ export const {
   pasteComponent,
   selectPrevComponent,
   selectNextComponent,
+  moveComponent,
 } = componentsSlice.actions
 export default componentsSlice.reducer

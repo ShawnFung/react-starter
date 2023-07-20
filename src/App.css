@@ -1,3 +1,6 @@
 body{
   margin: 0;
 }
+div[role="button"]{
+  outline: 0;
+}
