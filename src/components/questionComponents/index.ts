@@ -4,8 +4,11 @@ import QuestionTitleConf, { TitlePropsType } from './QuestionTitle'
 import QuestionParagraphConf, { ParagraphPropType } from './QuestionParagraph'
 import QuestionInfoConf, { InfoPropsType } from './QuestionInfo'
 import QuestionTextareaConf, { TextareaPropsType } from './QuestionTextarea'
-import QuestionRadioConf, { RadioPropsType } from './QuestionRadio'
-import QuestionCheckboxConf, { CheckboxPropsType } from './QuestionCheckbox'
+import QuestionRadioConf, { RadioPropsType, QuestionRadioStatPropsType } from './QuestionRadio'
+import QuestionCheckboxConf, {
+  CheckboxPropsType,
+  QuestionCheckboxStatPropsType,
+} from './QuestionCheckbox'
 
 export type ComponentPropsType = InputPropsType &
   TitlePropsType &
@@ -20,6 +23,7 @@ export type ComponentConfType = {
   type: string
   PropComponent: FC<ComponentPropsType>
   Component: FC<ComponentPropsType>
+  ChartComponent?: FC<QuestionRadioStatPropsType | QuestionCheckboxStatPropsType>
   defaultProps: ComponentPropsType
 }
 

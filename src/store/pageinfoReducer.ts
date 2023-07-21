@@ -5,6 +5,7 @@ export type PageInfoType = {
   desc?: string
   js?: string
   css?: string
+  isPublished: boolean
 }
 
 const defaultPageInfo: PageInfoType = {
@@ -12,6 +13,7 @@ const defaultPageInfo: PageInfoType = {
   desc: '',
   js: '',
   css: '',
+  isPublished: false,
 }
 
 const pageInfoSlice = createSlice({

@@ -7,6 +7,7 @@ import {
   selectPrevComponent,
   selectNextComponent,
 } from '../store/componentReducer'
+import { ActionCreators } from 'redux-undo'
 
 function isActiveElemValid() {
   const activeElement = document.activeElement
@@ -55,6 +56,26 @@ const useBindCanvasKeyPress = () => {
     }
     dispatch(selectNextComponent())
   })
+
+  useKeyPress(
+    ['ctrl.z'],
+    () => {
+      dispatch(ActionCreators.undo())
+    },
+    {
+      exactMatch: true,
+    }
+  )
+
+  useKeyPress(
+    ['ctrl.shift.z'],
+    () => {
+      dispatch(ActionCreators.redo())
+    },
+    {
+      exactMatch: true,
+    }
+  )
 }
 
 export default useBindCanvasKeyPress
